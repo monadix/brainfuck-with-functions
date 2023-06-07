@@ -2,7 +2,7 @@ import System.Environment
 import Control.Monad
 import Data.List
 import Data.Char
-import Data.Int
+import Data.Word
 import Data.Bifunctor
 
 emptyTape = (repeat 0, 0, repeat 0)
@@ -11,11 +11,11 @@ data Function = Function {actions :: [Action], innerFunctions :: [Function]} der
 
 data Action = Action Char | Loop [Action] | FunctionCall Int deriving Show
 
-type Tape = ([Int8], Int8, [Int8])
+type Tape = ([Word8], Word8, [Word8])
 
 data Runtime = Runtime {tape :: Tape, functions :: [Function]} 
 
-type Arr = (Int8, [Int8])
+type Arr = (Word8, [Word8])
 
 fmapAction :: ([Action] -> [Action]) -> Action -> Action
 fmapAction f (Loop acts) = Loop $ f acts
@@ -72,7 +72,7 @@ interpret = foldM doAction where
             '-' -> return $ Runtime (left, ptr-1, right) funcs
             '.' -> do
                 let ptr' = fromIntegral ptr
-                putChar $ chr $ ptr' + if ptr' < 0 then 128 else 0
+                putChar $ chr ptr'
                 return runtime
             ',' -> do
                 sym <- getChar
