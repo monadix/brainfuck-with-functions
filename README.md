@@ -25,7 +25,7 @@ This feature is implemented by means of infinity lists.
 New available symbols:
  * '{' and '}' - use it to define functions ('{' means start and '}' means end). You can define functions inside other functions too, but not inside loops.
 When interpreter reachs the end of the function, it returns current pointer (let it be n) and n next cells of the tape,
-and then builds it into global (or just higher level) tape.
+and then embeds it into global (or just higher level) tape to the right of the pointer.
  * '$' and '\`' - these symbols are used to call functions. Every function call consists of two parts: one symbol '$' and n (n>=0) symbols '`', 
 where n defines the ordinal number of called function. Functions are numbered in order from the beginning of the file. 
 This means that construction "$```" will call third function from current context. When interpreter calling the function it passes to it the current pointer (let it be n)
